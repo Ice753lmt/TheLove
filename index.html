@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="TheLOVE — kết nối bạn bè, trò chuyện và khám phá.">
+  <title>TheLOVE — Connect & Play</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" data-page="home"><span class="brand-mark">♡</span><span>The<span class="accent">LOVE</span></span></a>
+      <p class="side-label">KHÔNG GIAN CỦA BẠN</p>
+      <nav class="side-nav">
+        <button class="nav-link active" data-page="home"><span>⌂</span>Trang chủ</button>
+        <button class="nav-link" data-page="discover"><span>⌕</span>Tìm bạn</button>
+        <button class="nav-link" data-page="messages"><span>▤</span>Tin nhắn</button>
+        <button class="nav-link" data-page="following"><span>♡</span>Theo dõi</button>
+        <button class="nav-link" data-page="games"><span>⌘</span>Game <small>SẮP CÓ</small></button>
+        <button class="nav-link" data-page="profile"><span>◉</span>Hồ sơ</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="pulse-dot"></span><span>THELOVE NETWORK</span><span class="version">V1.0</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-brand" data-page="home"><span class="brand-mark">♡</span>TheLOVE</button>
+        <form id="globalSearchForm" class="top-search">
+          <span>⌕</span><input id="globalSearch" placeholder="Tìm bạn bằng tên hoặc @ID..." autocomplete="off">
+          <button type="submit">Tìm</button>
+        </form>
+        <div class="top-actions">
+          <span class="status-chip"><i></i> CONNECT</span>
+          <button id="topAvatar" class="top-avatar" data-page="profile" aria-label="Mở hồ sơ">♡</button>
+        </div>
+      </header>
+
+      <section id="authView" class="auth-view">
+        <div class="auth-orbit orbit-a"></div><div class="auth-orbit orbit-b"></div>
+        <div class="auth-card">
+          <div class="auth-logo">♡</div>
+          <p class="eyebrow">YOUR PEOPLE. YOUR WORLD.</p>
+          <h1>Kết nối theo<br>cách <span>của bạn.</span></h1>
+          <p class="muted intro">Gặp gỡ những người bạn mới, chia sẻ câu chuyện và tạo nên những kết nối có ý nghĩa.</p>
+          <button id="googleLogin" class="google-button"><span class="google-g">G</span>Tiếp tục với Google</button>
+          <div class="auth-separator"><span>TRẢI NGHIỆM THELOVE</span></div>
+          <div class="feature-strip"><div><b>01</b><span>Tìm bạn mới</span></div><div><b>02</b><span>Trò chuyện</span></div><div><b>03</b><span>Cùng giải trí</span></div></div>
+          <p class="tiny muted">Đăng nhập nghĩa là bạn đồng ý tuân thủ các quy tắc cộng đồng của TheLOVE.</p>
+        
+        </div>
+      </section>
+
+      <section id="setupView" class="setup-view hidden">
+        <div class="setup-card">
+          <p class="eyebrow">BƯỚC CUỐI CÙNG</p><h1>Tạo hồ sơ <span>của bạn.</span></h1>
+          <p class="muted">Chọn ảnh, đặt ID và giới thiệu một chút về bản thân.</p>
+          <form id="profileForm">
+            <label class="avatar-picker" for="avatarFile"><span id="avatarPlaceholder">＋</span><img id="avatarPreview" alt="Ảnh đại diện" class="hidden"><small>THÊM ẢNH ĐẠI DIỆN</small></label>
+            <input id="avatarFile" type="file" accept="image/*" class="hidden">
+            <label>TÊN HIỂN THỊ<input id="displayName" maxlength="40" required placeholder="Tên bạn muốn mọi người gọi"></label>
+            <label>USERNAME / ID<input id="username" maxlength="25" required placeholder="@ten_cua_ban"><small>Bắt đầu bằng @; 3–24 ký tự sau @, chỉ dùng chữ, số và dấu gạch dưới.</small></label>
+            <label>ĐỘ TUỔI<input id="age" type="number" min="13" max="120" required placeholder="Tuổi của bạn"><small>TheLOVE hiện dành cho người dùng từ 13 tuổi trở lên.</small></label>
+            <label>GIỚI THIỆU<textarea id="bio" maxlength="200" placeholder="Một chút về bạn..."></textarea></label>
+            <button class="primary-button full" type="submit">Hoàn tất hồ sơ →</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="appView" class="content-view hidden">
+        <section id="page-home" class="page">
+          <div class="hero">
+            <div class="hero-copy"><p class="eyebrow">WELCOME TO YOUR WORLD</p><h1>Chào bạn, <span id="welcomeName">người bạn mới</span> ✨</h1><p class="muted">Mỗi kết nối là một câu chuyện chưa kể.</p><button class="primary-button" data-page="discover">Khám phá bạn bè →</button></div>
+            <div class="hero-heart">♡</div><div class="hero-glow"></div>
+          </div>
+          <div class="section-heading"><div><p class="eyebrow">EXPLORE</p><h2>Có thể bạn sẽ thích</h2></div><button class="text-button" data-page="discover">Xem tất cả →</button></div>
+          <div id="suggestedPeople" class="people-grid"><div class="empty-state">Đăng nhập để khám phá cộng đồng TheLOVE.</div></div>
+          <div class="privacy-banner"><span>✦</span><div><b>Kết nối an toàn</b><p>Vị trí chỉ được chia sẻ khi bạn chủ động cho phép.</p></div></div>
+        </section>
+
+        <section id="page-discover" class="page hidden">
+          <div class="page-heading"><p class="eyebrow">FIND YOUR PEOPLE</p><h1>Khám phá <span>kết nối.</span></h1><p class="muted">Tìm người bạn muốn gặp bằng tên hoặc ID.</p></div>
+          <form id="peopleSearchForm" class="discover-search"><span>⌕</span><input id="peopleSearch" placeholder="Nhập tên hoặc @username..." autocomplete="off"><button class="primary-button" type="submit">Tìm kiếm</button></form>
+          <div id="searchResults" class="people-grid"><div class="empty-state">Nhập tên hoặc ID để tìm người dùng.</div></div>
+        </section>
+
+        <section id="page-messages" class="page hidden">
+          <div class="page-heading"><p class="eyebrow">PRIVATE CONVERSATIONS</p><h1>Tin <span>nhắn.</span></h1><p class="muted">Trò chuyện với những người bạn đã tìm thấy.</p></div>
+          <div class="chat-layout">
+            <div class="conversation-panel"><h3>Cuộc trò chuyện</h3><div id="conversationList"><div class="empty-state">Chưa có cuộc trò chuyện. Hãy tìm bạn và bắt đầu nhắn tin!</div></div></div>
+            <div class="chat-panel">
+              <div id="chatEmpty" class="chat-empty"><div class="chat-empty-icon">♡</div><h3>Không gian riêng của bạn</h3><p class="muted">Chọn một người bạn để bắt đầu trò chuyện.</p><button class="primary-button" data-page="discover">Tìm bạn</button></div>
+              <div id="chatActive" class="chat-active hidden"><div class="chat-header"><div id="chatAvatar" class="person-avatar">♡</div><div><b id="chatName">Người dùng</b><small id="chatUsername">@username</small></div><button id="closeChat" class="icon-button" aria-label="Đóng trò chuyện">×</button></div><div id="chatMessages" class="chat-messages"></div><form id="messageForm" class="message-form"><input id="messageInput" maxlength="5000" placeholder="Nhập tin nhắn..." autocomplete="off" required><button type="submit" aria-label="Gửi tin nhắn">➤</button></form></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="page-following" class="page hidden"><div class="page-heading"><p class="eyebrow">YOUR COMMUNITY</p><h1>Vòng tròn <span>của bạn.</span></h1><p class="muted">Những người bạn đang theo dõi.</p></div><div id="followingList" class="people-grid"><div class="empty-state">Danh sách theo dõi sẽ xuất hiện ở đây.</div></div></section>
+
+        <section id="page-games" class="page hidden"><div class="page-heading"><p class="eyebrow">PLAY TOGETHER</p><h1>Game <span>zone.</span></h1><p class="muted">Game HTML và bảng xếp hạng sẽ được bổ sung ở giai đoạn tiếp theo.</p></div><div class="coming-card"><div class="coming-icon">⌘</div><h2>Something fun is coming.</h2><p class="muted">Chúng ta sẽ tích hợp game, lưu điểm theo tài khoản và bảng xếp hạng sau khi hoàn thiện hệ thống bạn bè và nhắn tin.</p><span class="status-chip">COMING SOON</span></div></section>
+
+        <section id="page-profile" class="page hidden"><div class="page-heading"><p class="eyebrow">YOUR IDENTITY</p><h1>Hồ sơ <span>của bạn.</span></h1></div>
+          <div class="profile-card"><div class="profile-cover"></div><div class="profile-summary"><div id="profileAvatar" class="profile-avatar">♡</div><div><h2 id="profileDisplayName">Người dùng</h2><p id="profileUsername" class="accent-text">@username</p><p id="profileAge" class="muted"></p><p id="profileBio" class="muted"></p></div></div>
+          <div class="profile-actions"><button id="editProfile" class="secondary-button">✎ Sửa hồ sơ</button><button id="shareLocation" class="secondary-button">⌖ Chia sẻ vị trí</button></div><p id="locationStatus" class="location-status"></p>
+          <div class="settings-section"><h3>Cài đặt tài khoản</h3><button id="switchAccount" class="setting-row"><span>⇄</span><div><b>Đổi tài khoản</b><small>Đăng xuất để đăng nhập tài khoản khác</small></div><span>›</span></button><button id="deleteAccount" class="setting-row danger"><span>⌫</span><div><b>Xóa tài khoản</b><small>Xóa tài khoản và dữ liệu liên quan</small></div><span>›</span></button></div></div>
+        </section>
+      </section>
+
+      <footer class="footer"><span>♡ THELOVE</span><span>CONNECT · SHARE · PLAY</span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-nav"><button data-page="home"><span>⌂</span>Home</button><button data-page="discover"><span>⌕</span>Tìm bạn</button><button data-page="messages"><span>▤</span>Chat</button><button data-page="following"><span>♡</span>Theo dõi</button><button data-page="profile"><span>◉</span>Hồ sơ</button></nav>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.warn));
+    }
+  </script>
+</body>
+</html>
